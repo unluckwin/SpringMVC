@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+<description>Spring query start</description>
+<bean id="TheAction" class="net.gao.springimpl.UpperAction">
+  <property name="message">
+     <value>HeLLo</value>
+  </property>
+  </bean>
+</beans>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	  <property name="mappings">
+	   <props>
+	      <prop key="my.do">startControll</prop>
+	      <prop key="addemp.do">commandControll</prop>
+	      <prop key="to_add.do">mutilControll</prop>
+	      <prop key="add_emp.do">mutilControll</prop>
+	      <prop key="param.do">paramControll</prop>
+	   </props>
+	  </property>
+	</bean>
+	
+	<!--http://localhost:8088/Spring/to_add.do 通过方法名来解析   http://localhost:8088/Spring/add_emp.do-->
+	<bean id="mutilControll" class="com.net.spring.controll.MultiController">
+	    <property name="methodNameResolver">
+	          <bean class="org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver"></bean>
+	    </property>
+	</bean>
+	<!-- 参数的调用 。例子：http://localhost:8088/Spring/param.do?name=to_add-->
+	<bean id="paramControll" class="com.net.spring.controll.ParamController">
+	      <property name="methodNameResolver">
+	          <bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+	              <property name="paramName" value="name"></property>
+	          </bean>
+	    </property>   
+	</bean>
+	
+	<!-- Controller 控制器的使用 。http://localhost:8088/Spring/my.do-->
+	<bean id="startControll" class="com.net.spring.controll.Controller"></bean>
+	
+	<!-- CommandController类的使用，它可以直接注入PO类。http://localhost:8088/Spring/addemp.do -->
+	<bean id="commandControll" class="com.net.spring.controll.CommandController">
+	  <property name="commandClass" value="com.net.spring.po.Emp"></property>
+	</bean>          
+</beans>
